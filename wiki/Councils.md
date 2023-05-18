@@ -56,6 +56,7 @@ This document is still a work in progress, don't worry if your council isn't lis
 - [North Tyneside Council](#north-tyneside-council)
 - [Northumberland Council](#northumberland-council)
 - [Rochdale Council](#rochdale-council)
+- [Rushmoor Council](#rushmoor-council)
 - [Salford City Council](#salford-city-council)
 - [Sheffield City Council](#sheffield-city-council)
 - [Somerset Council](#somerset-council)
@@ -79,7 +80,9 @@ This document is still a work in progress, don't worry if your council isn't lis
 - [Wealden District Council](#wealden-district-council)
 - [Welhat Council](#welhat-council)
 - [Wigan Borough Council](#wigan-borough-council)
+- [Wiltshire Council](#wiltshire-council)
 - [Windsor and Maidenhead Council](#windsor-and-maidenhead-council)
+- [Woking Borough Council/Joint Waste Solutions](#woking-borough-council/joint-waste-solutions)
 - [York Council](#york-council)
 
 ---
@@ -535,6 +538,15 @@ Additional parameters:
 
 ---
 
+### Rushmoor Council
+```commandline
+python collect_data.py RushmoorCouncil https://www.rushmoor.gov.uk/recycling-rubbish-and-environment/bins-and-recycling/download-or-print-your-bin-collection-calendar/?uprn=XXXXXXXXXX&weeks=16
+```
+
+Note: Replace XXXXXXXXXX in URL with your own UPRN.
+
+---
+
 ### Salford City Council
 ```commandline
 python collect_data.py SalfordCityCouncil https://www.salford.gov.uk/bins-and-recycling/bin-collection-days/your-bin-collections -u XXXXXXXX
@@ -757,6 +769,15 @@ Additional parameters:
 
 ---
 
+### Wiltshire Council
+```commandline
+python collect_data.py WiltshireCouncil https://ilambassadorformsprod.azurewebsites.net/wastecollectiondays/index -p "XXXX XXX"
+```
+Additional parameters:
+- `-p` - postcode
+
+---
+
 ### Windsor and Maidenhead Council
 ```commandline
 python collect_data.py WindsorAndMaidenheadCouncil https://my.rbwm.gov.uk/special/find-your-collection-dates -p "XXXX XXX" -n XX
@@ -764,6 +785,18 @@ python collect_data.py WindsorAndMaidenheadCouncil https://my.rbwm.gov.uk/specia
 Additional parameters:
 - `-p` - postcode
 - `-n` - house number
+
+---
+
+### Woking Borough Council/Joint Waste Solutions
+```commandline
+python collect_data.py WokingBoroughCouncil https://asjwsw-wrpwokingmunicipal-live.whitespacews.com/ -p "XXXX XXX" -n XX
+```
+Additional parameters:
+- `-p` - postcode
+- `-n` - house number
+
+Note: Works with all collection areas that use Joint Waste Solutions. Just use the correct URL.
 
 ---
 
