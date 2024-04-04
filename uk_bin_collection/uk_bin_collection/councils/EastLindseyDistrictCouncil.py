@@ -28,6 +28,8 @@ class CouncilClass(AbstractGetBinDataClass):
 
             # Create Selenium webdriver
             driver = create_webdriver(web_driver, headless)
+
+
             driver.get(
                 "https://www.e-lindsey.gov.uk/article/6714/Your-Waste-Collection-Days"
             )
@@ -35,7 +37,7 @@ class CouncilClass(AbstractGetBinDataClass):
             # Wait for the postcode field to appear then populate it
             inputElement_postcode = WebDriverWait(driver, 30).until(
                 EC.presence_of_element_located(
-                    (By.ID, "WASTECOLLECTIONDAYS202324_LOOKUP_ADDRESSLOOKUPPOSTCODE")
+                    (By.ID, "WASTECOLLECTIONDAYS202425_LOOKUP_ADDRESSLOOKUPPOSTCODE")
                 )
             )
             inputElement_postcode.send_keys(user_postcode)
@@ -43,7 +45,7 @@ class CouncilClass(AbstractGetBinDataClass):
             # Click search button
             findAddress = WebDriverWait(driver, 10).until(
                 EC.presence_of_element_located(
-                    (By.ID, "WASTECOLLECTIONDAYS202324_LOOKUP_ADDRESSLOOKUPSEARCH")
+                    (By.ID, "WASTECOLLECTIONDAYS202425_LOOKUP_ADDRESSLOOKUPSEARCH")
                 )
             )
             findAddress.click()
@@ -53,7 +55,7 @@ class CouncilClass(AbstractGetBinDataClass):
                 EC.element_to_be_clickable(
                     (
                         By.XPATH,
-                        "//select[@id='WASTECOLLECTIONDAYS202324_LOOKUP_ADDRESSLOOKUPADDRESS']//option[contains(., '"
+                        "//select[@id='WASTECOLLECTIONDAYS202425_LOOKUP_ADDRESSLOOKUPADDRESS']//option[contains(., '"
                         + user_paon
                         + "')]",
                     )
@@ -63,7 +65,7 @@ class CouncilClass(AbstractGetBinDataClass):
             # Wait for the submit button to appear, then click it to get the collection dates
             submit = WebDriverWait(driver, 10).until(
                 EC.presence_of_element_located(
-                    (By.ID, "WASTECOLLECTIONDAYS202324_LOOKUP_FIELD2_NEXT")
+                    (By.ID, "WASTECOLLECTIONDAYS202425_LOOKUP_FIELD2_NEXT")
                 )
             )
             submit.click()
@@ -74,7 +76,9 @@ class CouncilClass(AbstractGetBinDataClass):
             )
 
             soup = BeautifulSoup(driver.page_source, features="html.parser")
-
+            z = soup.find("div", class_="waste-result waste-result__error")
+            if soup.find("div", class_="waste-result waste-result__error"):
+                raise ValueError(soup.find("div", class_="waste-result waste-result__error").text.strip().replace("\n", " - "))
             # Get collections
             for collection in soup.find_all("div", {"class": "waste-result"}):
                 ptags = collection.find_all("p")
