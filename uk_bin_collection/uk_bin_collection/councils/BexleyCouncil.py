@@ -116,22 +116,24 @@ class CouncilClass(AbstractGetBinDataClass):
                 )
 
                 if h3_text and date_text:
-                    # Parse the date using the appropriate format
-                    parsed_date = datetime.strptime(date_text, "%A %d %B")
+                    if date_text == "Being collected today":
+                        parsed_date = datetime.now().date()
+                    else:
+                        # Parse the date using the appropriate format
+                        parsed_date = datetime.strptime(date_text, "%A %d %B")
 
-                    # Assuming the current year is used for the collection date
-                    current_year = datetime.now().year
+                        # Assuming the current year is used for the collection date
+                        current_year = datetime.now().year
 
-                    # If the parsed date is in the past, assume it's for the next year
-                    if parsed_date < datetime.now():
-                        current_year += 1
+                        # If the parsed date is in the past, assume it's for the next year
+                        if parsed_date < datetime.now():
+                            current_year += 1
+                            parsed_date.replace(year=current_year)
 
                     data["bins"].append(
                         {
                             "type": h3_text,
-                            "collectionDate": parsed_date.replace(
-                                year=current_year
-                            ).strftime("%d/%m/%Y"),
+                            "collectionDate": parsed_date.strftime(date_format),
                         }
                     )
 
